@@ -29,9 +29,6 @@ Options:
 `)
 	flag.PrintDefaults()
 }
-
-///
-//var daemon_path = "/Users/chihuan/Documents/go_work/gin_daemon/gin_daemon"
 func main() {
 	flag.Parse()
 	if h {
@@ -46,9 +43,8 @@ func main() {
 	ch := make(chan string)
 	go start_new_exec(daemon_path, ch) //这里子进程启动
 	after := time.NewTimer(time.Second * 5)
-	//defer after.Stop()
 	c := make(chan os.Signal)
-	//监听所有信号
+	//监听信号
 	signal.Notify(c, syscall.SIGTERM, syscall.SIGQUIT, syscall.SIGINT) //监听父进程（当前进程） 退出信号
 	go func() {
 		for s := range c {
@@ -79,6 +75,7 @@ func main() {
 
 func start_new_exec(daemon_path string, ch chan string) {
 	fmt.Println("子进程启动   excute: ", daemon_path)
+	fmt.Println("子进程启动   Args: ", os.Args)
 	cmd := exec.Command(daemon_path, os.Args[1:]...)
 	//将其他命令传入生成出的进程
 	// cmd.Stdin=nil                             //给新进程设置文件描述符，可以重定向到文件中

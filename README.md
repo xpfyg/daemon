@@ -11,6 +11,14 @@
 
 ## 使用方法
 ```
+# 安装
 # go install
-# daemon -p= '启动命令'
+# daemon -p= '启动命令' arg...
+```
+## 例子
+```
+# 普通启动
+# java -jar abc.jar
+# 守护进程启动
+# daemon -p='java' -jar abc.jar
 ```
